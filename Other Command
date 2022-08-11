@@ -1,0 +1,17 @@
+mysqlCid="$(docker run -d \
+ -e MYSQL_RANDOM_ROOT_PASSWORD=true \
+ -e MYSQL_DATABASE=monica \
+ -e MYSQL_USER=bobvanh \
+ -e MYSQL_PASSWORD=ouwelingen \
+ -p 3306:3306 \
+ -v /home/bob/mysqldumps:/mysqldumps \
+ "mysql:5.7")"
+docker run -d \
+ --link "$mysqlCid":mysql \
+ -e DB_HOST=mysql \
+ -p 8080:80 \
+ -v /home/bob/mysqldumps:/mysqldumps \
+ -v /home/bob/monica:/public \
+ monica
+
+# ervanuitgaande dat je dit commando start vanaf /home/bob/
